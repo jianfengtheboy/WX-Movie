@@ -1,12 +1,68 @@
 {
   "pages":[
-    "pages/index/index",
-    "pages/logs/logs"
+    "pages/popular/popular",
+    "pages/coming/coming",
+    "pages/top/top",
+    "pages/search/search",
+    "pages/filmDetail/filmDetail",
+    "pages/personDetail/personDetail",
+    "pages/searchResult/searchResult",
+    "pages/my/my",
+    "pages/favorite/favorite",
+    "pages/history/history",
+    "pages/shake/shake",
+    "pages/gallery/gallery",
+    "pages/setting/setting",
+    "pages/skin/skin",
+    "pages/personInfo/personInfo",
+    "pages/editPersonInfo/editPersonInfo",
+    "pages/systemInfo/systemInfo",
+    "pages/about/about",
+    "pages/location/location"
   ],
   "window":{
-    "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
-  }
+    "navigationBarBackgroundColor": "#47a86c",
+    "navigationBarTitleText": "电影推荐",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#fff",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#686868",
+    "selectedColor": "#47a86c",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/popular/popular",
+        "iconPath": "images/popular_icon.png",
+        "selectedIconPath": "images/popular_active_icon.png",
+        "text": "热映"
+      },
+      {
+        "pagePath": "pages/coming/coming",
+        "iconPath": "images/coming_icon.png",
+        "selectedIconPath": "images/coming_active_icon.png",
+        "text": "待映"
+      },
+      {
+        "pagePath": "pages/top/top",
+        "iconPath": "images/top_icon.png",
+        "selectedIconPath": "images/top_active_icon.png",
+        "text": "口碑"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "iconPath": "images/my_icon.png",
+        "selectedIconPath": "images/my_active_icon.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
 }
