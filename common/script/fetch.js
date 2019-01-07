@@ -47,3 +47,40 @@ function fetchFilms(url, start, count, cb, fail_cb) {
     })
   }
 }
+
+//获取电影详情
+function fetchFilmDetail(url, id, cb) {
+  let that = this
+  message.hide.call(that)
+  wx.request({
+    url: url + id,
+    method : 'GET',
+    header : {
+      "Content-Type": "application/json,application/json"
+    },
+    success: function(res) {
+      that.setData({
+        filmDetail: res.data,
+        showLoading: false,
+        showContent: true
+      })
+      wx.setNavigationBarTitle({
+        title: res.data.title
+      })
+      wx.stopPullDownRefresh()
+      typeof cb == 'function' && cb(res.data)
+    },
+    fail: function() {
+      that.setData({
+        showLoading: false
+      })
+      message.hide.call(that, {
+        content: '网络开小差了',
+        icon: 'offline',
+        duration: 3000
+      })
+    }
+  })
+}
+
+//获取任务详情
