@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/popular/popular",
     "pages/coming/coming",
     "pages/top/top",
@@ -20,7 +20,7 @@
     "pages/about/about",
     "pages/location/location"
   ],
-  "window":{
+  "window": {
     "navigationBarBackgroundColor": "#47a86c",
     "navigationBarTitleText": "电影推荐",
     "navigationBarTextStyle": "white",
