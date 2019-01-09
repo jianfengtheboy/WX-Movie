@@ -122,5 +122,54 @@ function fetchPersonDetail(url, id, cb) {
 function search(url, keywrod, start, count, cb) {
   let that = this
   message.hide.call(that)
+  var url = decodeURIComponent(url)
+  if (that.data.hasMore) {
+    wx.request({
+      url: url + keyword,
+      data: {
+        start: start,
+        count: count
+      },
+      method: 'GET',
+      header: {
+        "Content-Type": "application/json,application/json"
+      },
+      success: function(res) {
+        if (res.data.subjects.length === 0) {
+          that.setData({
+            hasMore: false,
+            showLoading: false
+          })
+        } else {
+          that.setData({
+            films: that.data.films.concat(res.data.subjects),
+            start: that.data.start + res.data.subjects.length,
+            showLoading: false
+          })
+          wx.setNavigationBarTitle({
+            title: keyword
+          })
+        }
+        wx.stopPullDownRefresh()
+        typeof cb == 'function' && cb(res.data)
+      },
+      fail: function() {
+        that.setData({
+          showLoading: false
+        })
+        message.hide.call(that, {
+          content: '网络开小差了',
+          icon: 'offline',
+          duration: 3000
+        })
+      }
+    })
+  }
+}
 
+module.exports = {
+  fetchFilms: fetchFilms,
+  fetchFilmDetail: fetchFilmDetail,
+  fetchPersonDetail: fetchPersonDetail,
+  search: search
 }
