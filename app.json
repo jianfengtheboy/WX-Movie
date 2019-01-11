@@ -20,6 +20,11 @@
     "pages/about/about",
     "pages/location/location"
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "Sun"
+    }
+  },
   "window": {
     "navigationBarBackgroundColor": "#47a86c",
     "navigationBarTitleText": "电影推荐",

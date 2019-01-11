@@ -1,66 +1,55 @@
 // pages/popular/popular.js
+let douban = require("../../common/script/fetch")
+let config = require("../../common/script/config")
+let app = getApp()
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    films: [],
+    hasMore: true,
+    showLoading: true,
+    start: 0,
+    bannerList: config.bannerList
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    let that = this
+    wx.showNavigationBarLoading()
+    app.getCity(function() {
+      wx.hideNavigationBarLoading()
+      wx.setNavigationBarTitle({
+        title: '正在热映' + config.city,
+      })
+      douban.fetchFilms.call(that, config.apiList.popular, that.data.start)
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-
+    let that = this
+    that.setData({
+      films: [],
+      hasMore: true,
+      showLoading: true,
+      start: 0
+    })
+    this.onLoad()
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
+    let that = this
+    if (!that.data.showLoading) {
+      douban.fetchFilms.call(that, config.apiList.popular, that.data.start)
+    }
+  },
+  viewFilmDetail(e) {
+    let data = e.currentTarget.datasetwx.navigateTo({
+      url: "../filmDetail/filmDetail?id=" + data.id
+    })
+  },
+  viewFilmByTag(e) {
 
   },
+  viewBannerDetail(e) {
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  },
+  viewSearch() {
+    
   }
 })
