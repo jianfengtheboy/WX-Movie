@@ -39,17 +39,39 @@ Page({
     }
   },
   viewFilmDetail(e) {
-    let data = e.currentTarget.datasetwx.navigateTo({
+    let data = e.currentTarget.dataset
+    wx.navigateTo({
       url: "../filmDetail/filmDetail?id=" + data.id
     })
   },
   viewFilmByTag(e) {
-
+    let data = e.currentTarget.dataset
+    let keyword = data.tag
+    wx.navigateTo({
+      url: "../searchResult/searchResult?url=" + encodeURIComponent(config.apiList.search.byTag) + "&keyword=" + keyword
+    })
   },
   viewBannerDetail(e) {
-
+    let data = e.currentTarget.dataset
+    if (data.type == 'film') {
+      wx.navigateTo({
+        url: "../filmDetail/filmDetail?id=" + data.id
+      })
+    } else if (data.type == 'person') {
+      wx.navigateTo({
+        url: "../personDetail/personDetail?id=" + data.id
+      })
+    } else if (data.type == 'search') {
+      // stype(searchType) 0:关键词, 1:类型标签
+      let searchUrl = type == "keyword" ? config.search.byKeyword : config.search.byTag
+      wx.navigateTo({
+        url: "../searchResult/searchResult?url=" + encodeURIComponent(searchUrl) + "&keyword" + keyword
+      })
+    }
   },
   viewSearch() {
-    
+    wx.navigateTo({
+      url: "../search/search"
+    })
   }
 })
