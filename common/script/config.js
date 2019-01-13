@@ -17,15 +17,15 @@ module.exports = {
   count: 20,
   baiduAK: 'Y1R5guY8Y2GNRdDpLz7SUeM3QgADAXec',
   apiList: {
-    popular: 'https://api.douban.com/v2/movie/in_theaters',
-    coming: 'https://api.douban.com/v2/movie/coming_soon',
-    top: 'https://api.douban.com/v2/movie/top250',
+    popular: 'https://douban.uieee.com/v2/movie/in_theaters',
+    coming: 'https://douban.uieee.com/v2/movie/coming_soon',
+    top: 'https://douban.uieee.com/v2/movie/top250',
     search: {
-      byKeyword: 'https://api.douban.com/v2/movie/search?q=',
-      byTag: 'https://api.douban.com/v2/movie/search?tag='
+      byKeyword: 'https://douban.uieee.com/v2/movie/search?q=',
+      byTag: 'https://douban.uieee.com/v2/movie/search?tag='
     },
-    filmDetail: 'https://api.douban.com/v2/movie/subject/',
-    personDetail: 'https://api.douban.com/v2/movie/celebrity/',
+    filmDetail: 'https://douban.uieee.com/v2/movie/subject/',
+    personDetail: 'https://douban.uieee.com/v2/movie/celebrity/',
     baiduMap: 'https://api.map.baidu.com/geocoder/v2/'
   },
   hotKeyword: ['功夫熊猫', '烈日灼心', '摆渡人', '长城', '我不是潘金莲', '这个杀手不太冷', '驴得水', '海贼王之黄金城', '西游伏妖片', '我在故宫修文物', '你的名字'],

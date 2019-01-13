@@ -1,19 +1,19 @@
 //app.js
-let config = require('common/script/config');
+let config = require('common/script/config')
 App({
   globalData: {
     userInfo: null
   },
   onLaunch: function () {
-    //获取用户信息
+    // 获取用户信息
     this.getUserInfo()
     //初始化缓存
     this.initStorage()
   },
-  getUserInfo: function(cb) {
+  getUserInfo: function (cb) {
     let that = this
     wx.login({
-      success: function() {
+      success: function () {
         wx.getUserInfo({
           success: function (res) {
             that.globalData.userInfo = res.userInfo
@@ -23,65 +23,65 @@ App({
       }
     })
   },
-  getCity: function(cb) {
+  getCity: function (cb) {
     let that = this
     wx.getLocation({
       type: 'gcj02',
-      success: function(res) {
+      success: function (res) {
         let locationParam = res.latitude + ',' + res.longitude + '1'
         wx.request({
           url: config.apiList.baiduMap,
           data: {
-            ak: config.baiduAk,
+            ak: config.baiduAK,
             location: locationParam,
             output: 'json',
             pois: '1'
           },
           method: 'GET',
-          success: function(res) {
-            config.city = res.data.result.addressComponent.city.slice(0,-1)
+          success: function (res) {
+            config.city = res.data.result.addressComponent.city.slice(0, -1)
             typeof cb == "function" && cb(res.data.result.addressComponent.city.slice(0, -1))
           },
-          fail: function(res) {
-            //重新定位
-            that.getCity()
+          fail: function (res) {
+            // 重新定位
+            that.getCity();
           }
         })
-      },
+      }
     })
   },
-  initStorage: function() {
+  initStorage: function () {
     wx.getStorageInfo({
-      success: function(res) {
-        //判断电影收藏是否存在，没有则创建
+      success: function (res) {
+        // 判断电影收藏是否存在，没有则创建
         if (!('film_favorite' in res.keys)) {
           wx.setStorage({
             key: 'film_favorite',
-            data: [],
+            data: []
           })
         }
-        //判断人物收藏是否存在，没有则创建
+        // 判断人物收藏是否存在，没有则创建
         if (!('person_favorite' in res.keys)) {
           wx.setStorage({
             key: 'person_favorite',
-            data: [],
+            data: []
           })
         }
-        //判断电影浏览记录是否存在，没有则创建
+        // 判断电影浏览记录是否存在，没有则创建
         if (!('film_history' in res.keys)) {
           wx.setStorage({
             key: 'film_history',
-            data: [],
+            data: []
           })
         }
-        //判断人物浏览记录是否存在，没有则创建
+        // 判断人物浏览记录是否存在，没有则创建
         if (!('person_history' in res.keys)) {
           wx.setStorage({
             key: 'person_history',
-            data: [],
+            data: []
           })
         }
-        //个人信息默认数据
+        // 个人信息默认数据
         let personInfo = {
           name: '',
           nickName: '',
@@ -99,21 +99,21 @@ App({
         if (!('person_info' in res.keys)) {
           wx.setStorage({
             key: 'person_info',
-            data: personInfo,
+            data: personInfo
           })
         }
-        //判断相册数据是否存在，没有则创建
+        // 判断相册数据是否存在，没有则创建
         if (!('gallery' in res.keys)) {
           wx.setStorage({
             key: 'gallery',
-            data: [],
+            data: []
           })
         }
-        //判断背景卡选择数据是否存在，没有则创建
+        // 判断背景卡选择数据是否存在，没有则创建
         if (!('skin' in res.keys)) {
           wx.setStorage({
             key: 'skin',
-            data: [],
+            data: ''
           })
         }
       }

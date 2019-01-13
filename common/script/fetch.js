@@ -1,9 +1,9 @@
-let config = require('./config.js');
-let message = require('../../component/message/message.js')
+let config = require('./config.js')
+let message = require('../../component/message/message')
 
-//获取电影列表
+// 获取电影列表
 function fetchFilms(url, start, count, cb, fail_cb) {
-  let that = this;
+  let that = this
   message.hide.call(that)
   if (that.data.hasMore) {
     wx.request({
@@ -15,12 +15,12 @@ function fetchFilms(url, start, count, cb, fail_cb) {
       },
       method: 'GET',
       header: {
-        "Content-Type": "application/json,application/json"
+        "Content-Type": "application/xml"
       },
-      success: function(res) {
-        if (res.data.subjects.length ===0) {
+      success: function (res) {
+        if (res.data.subjects.length === 0) {
           that.setData({
-            hasMore: false
+            hasMore: false,
           })
         } else {
           that.setData({
@@ -32,7 +32,7 @@ function fetchFilms(url, start, count, cb, fail_cb) {
         wx.stopPullDownRefresh()
         typeof cb == 'function' && cb(res.data)
       },
-      fail: function() {
+      fail: function () {
         that.setData({
           showLoading: false
         })
@@ -48,17 +48,17 @@ function fetchFilms(url, start, count, cb, fail_cb) {
   }
 }
 
-//获取电影详情
+// 获取电影详情
 function fetchFilmDetail(url, id, cb) {
-  let that = this
+  let that = this;
   message.hide.call(that)
   wx.request({
     url: url + id,
-    method : 'GET',
-    header : {
-      "Content-Type": "application/json,application/json"
+    method: 'GET',
+    header: {
+      "Content-Type": "application/xml"
     },
-    success: function(res) {
+    success: function (res) {
       that.setData({
         filmDetail: res.data,
         showLoading: false,
@@ -70,7 +70,7 @@ function fetchFilmDetail(url, id, cb) {
       wx.stopPullDownRefresh()
       typeof cb == 'function' && cb(res.data)
     },
-    fail: function() {
+    fail: function () {
       that.setData({
         showLoading: false
       })
@@ -83,17 +83,17 @@ function fetchFilmDetail(url, id, cb) {
   })
 }
 
-//获取人物详情
+// 获取人物详情
 function fetchPersonDetail(url, id, cb) {
-  let that = this
+  let that = this;
   message.hide.call(that)
   wx.request({
     url: url + id,
     method: 'GET',
     header: {
-      "Content-Type": "application/json,application/json"
+      "Content-Type": "application/xml"
     },
-    success: function(res) {
+    success: function (res) {
       that.setData({
         personDetail: res.data,
         showLoading: false,
@@ -103,9 +103,9 @@ function fetchPersonDetail(url, id, cb) {
         title: res.data.name
       })
       wx.stopPullDownRefresh()
-      typeof cb == 'function' && cb(res.data) 
+      typeof cb == 'function' && cb(res.data)
     },
-    fail: function() {
+    fail: function () {
       that.setData({
         showLoading: false
       })
@@ -118,8 +118,8 @@ function fetchPersonDetail(url, id, cb) {
   })
 }
 
-//搜索（关键字或类型）
-function search(url, keywrod, start, count, cb) {
+// 搜索（关键词或者类型）
+function search(url, keyword, start, count, cb) {
   let that = this
   message.hide.call(that)
   var url = decodeURIComponent(url)
@@ -132,9 +132,9 @@ function search(url, keywrod, start, count, cb) {
       },
       method: 'GET',
       header: {
-        "Content-Type": "application/json,application/json"
+        "Content-Type": "application/xml"
       },
-      success: function(res) {
+      success: function (res) {
         if (res.data.subjects.length === 0) {
           that.setData({
             hasMore: false,
@@ -153,11 +153,11 @@ function search(url, keywrod, start, count, cb) {
         wx.stopPullDownRefresh()
         typeof cb == 'function' && cb(res.data)
       },
-      fail: function() {
+      fail: function () {
         that.setData({
           showLoading: false
         })
-        message.hide.call(that, {
+        message.show.call(that, {
           content: '网络开小差了',
           icon: 'offline',
           duration: 3000
