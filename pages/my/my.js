@@ -34,23 +34,28 @@ Page({
           that.setData({
             skin: config.skinList[0].imgUrl
           })
+        } else {
+          that.setData({
+            skin: res.data
+          })
         }
       }
     })
   },
-  onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
   onPullDownRefresh: function () {
-
+    this.onLoad(() => {
+      wx.stopPullDownRefresh()
+    })
   },
-  onReachBottom: function () {
-
+  viewGridDetail: function(e) {
+    let data = e.currentTarget.dataset
+    wx.navigateTo({
+      url: "../" + data.url + '/' + data.url
+    })
   },
-  onShareAppMessage: function () {
-
+  viewSkin: function(e) {
+    wx.navigateTo({
+      url: "../skin/skin"
+    })
   }
 })
