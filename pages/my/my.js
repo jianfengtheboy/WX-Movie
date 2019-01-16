@@ -1,65 +1,55 @@
 // pages/my/my.js
+let config = require("../../common/script/config.js");
+let app = getApp();
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    gridList: [
+      { enName: 'favorite', zhName: '收藏' },
+      { enName: 'history', zhName: '浏览记录' },
+      { enName: 'shake', zhName: '摇一摇' },
+      { enName: 'gallery', zhName: '相册' },
+      { enName: 'setting', zhName: '设置' }
+    ],
+    skin: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onLoad: function (cb) {
+    let that = this
+    // 检测是否存在用户信息
+    if (app.globalData.userInfo != null) {
+      that.setData({
+        userInfo: app.globalData.userInfo
+      })
+    } else {
+      app.getUserInfo()
+    }
+    typeof cb == 'function' && cb()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-
+    let that = this
+    wx.getStorage({
+      key: 'skin',
+      success: function(res) {
+        if (res.data == "") {
+          that.setData({
+            skin: config.skinList[0].imgUrl
+          })
+        }
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
 
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
 
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
   }

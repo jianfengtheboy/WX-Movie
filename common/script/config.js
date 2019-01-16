@@ -11,7 +11,9 @@ skinList: “我的”页面背景列表
 shakeSound: 摇一摇音效地址（带url表示远程地址）
 shakeWelcomeImg: 摇一摇欢迎图片
 */
-let url = 'https://static.sesine.com/wechat-weapp-movie'
+let url = 'https://static.sesine.com/wechat-weapp-movie';
+// api地址
+var apiUrl = 'https://sesine.com/mina/api'
 module.exports = {
   city: '',
   count: 20,
