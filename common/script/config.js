@@ -12,7 +12,7 @@ shakeSound: 摇一摇音效地址（带url表示远程地址）
 shakeWelcomeImg: 摇一摇欢迎图片
 */
 let url = 'https://static.sesine.com/wechat-weapp-movie';
-// api地址
+// api地址(可用于替换apiList下的https://douban.uieee.com  例如 => popular: apiUrl + '/movie/in_theaters')
 var apiUrl = 'https://sesine.com/mina/api'
 module.exports = {
   city: '',

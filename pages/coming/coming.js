@@ -1,66 +1,45 @@
 // pages/coming/coming.js
+let douban = require("../../common/script/fetch.js");
+let config = require("../../common/script/config.js");
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    films: [],
+    hasMore: true,
+    showLoading: true,
+    start: 0
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    let that = this
+    douban.fetchFilms.call(that, config.apiList.coming, that.data.start)
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-
+    let that = this
+    that.setData({
+      films: [],
+      hasMore: true,
+      showLoading: true,
+      start: 0
+    })
+    douban.fetchFilms.call(that, config.apiList.coming, that.data.start)
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-
+    let that = this
+    if (!that.data.showLoading) {
+      douban.fetchFilms.call(that, config.apiList.coming, that.data.start)
+    }
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  viewFilmDetail: function(e) {
+    let data = e.currentTarget.dataset
+    wx.navigateTo({
+      url: "../filmDetail/filmDetail?id=" + data.id
+    })
+  },
+  viewFilmByTag: function(e) {
+    let data = e.currentTarget.dataset
+    let keyword = data.tag
+    wx.navigateTo({
+      url: "../searchResult/searchResult?url=" + encodeURIComponent(config.apiList.search.byTag) + "&keyword=" + keyword
+    })
   }
 })
