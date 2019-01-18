@@ -1,6 +1,6 @@
 // pages/coming/coming.js
-let douban = require("../../common/script/fetch.js");
-let config = require("../../common/script/config.js");
+let douban = require("../../common/script/fetch")
+let config = require("../../common/script/config")
 
 Page({
   data: {
