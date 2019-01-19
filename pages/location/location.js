@@ -1,66 +1,101 @@
 // pages/location/location.js
+let config = require("../../common/script/config")
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    latitude: "",
+    longitude: "",
+    markers: [
+      {
+        latitude: 0,
+        longitude: 0,
+        name: "我的位置",  
+        desc: ""
+      }
+    ],
+    covers: [
+      {
+        latitude: 0,
+        longitude: 0,
+        iconPath: "../../dist/images/green_tri.png",
+      },
+      {
+        latitude: 0,
+        longitude: 0,
+        iconPath: "../../dist/images/green_tri.png",
+        rotate: 180
+      }
+    ],
+    formatted_address: "",
+    loading: false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    this.getLocation()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  getLocation: function() {
+    let that = this
+    that.setData({
+      loading: true
+    })
+    wx.getLocation({
+      type: "gcj02",
+      success: function(res) {
+        // 设置地图
+        that.setData({
+          latitude: res.latitude,
+          longitude: parseFloat(res.longitude + "1"),
+          markers: [
+            {
+              latitude: res.latitude,
+              longitude: parseFloat(res.longitude + "1")
+            }
+          ],
+          covers: [
+            {
+              latitude: res.latitude,
+              longitude: parseFloat(res.longitude  + "1")
+            }, 
+            {
+              latitude: res.latitude,
+              longitude: parseFloat(res.longitude + "1")
+            }
+          ]
+        })
+        // 获取中文详细地址
+        let locationParam = res.latitude + "," + res.longitude + "1"
+        wx.request({
+          url: config.apiList.baiduMap,
+          data: {
+            ak: config.baiduAK,
+            location: locationParam,
+            output: "json",
+            pois: "1" 
+          },
+          method: "GET",
+          success: function(res) {
+            that.setData({
+              markers: [
+                {
+                  latitude: 0,
+                  longitude: 0,
+                  name: "我的位置",
+                  desc: res.data.result.formatted_address
+                }
+              ],
+              formatted_address: res.data.result.formatted_address
+            })
+            that.setData({
+              loading: true
+            })
+          },
+          fail: function() {
+            that.getLocation()
+          } 
+        })
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  refreshLocation: function() {
+    this.getLocation()
   }
 })

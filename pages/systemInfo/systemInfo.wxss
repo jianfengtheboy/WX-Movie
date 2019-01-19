@@ -1,1 +1,2 @@
 /* pages/systemInfo/systemInfo.wxss */
+@import "../../component/list/list.wxss"

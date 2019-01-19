@@ -1,2 +1,3 @@
 <!--pages/systemInfo/systemInfo.wxml-->
-<text>pages/systemInfo/systemInfo.wxml</text>
+<import src="../../component/list/list.wxml" />
+<template is="list" data="{{cells: cells}}" />
