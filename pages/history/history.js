@@ -1,66 +1,65 @@
 // pages/history/history.js
+let filmNullTip = {
+  tipText: "亲，找不到电影的浏览记录",
+  actionText: "去逛逛",
+  routeUrl: "../popular/popular"
+}
+let personNullTip = {
+  tipText: "亲，找不到人物的浏览记录",
+  actionText: "去逛逛",
+  routeUrl: "../popular/popular"
+}
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    film_history: [],
+    person_history: [],
+    show: "film_history",
+    nullTip: filmNullTip
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    let that = this
+    wx.getStorage({
+      key: "film_history",
+      success: function(res){
+        that.setData({
+          film_history: res.data
+        })
+      }
+    })
+    wx.getStorage({
+      key: "person_history",
+      success: function(res){
+        that.setData({
+          person_history: res.data
+        })
+      }
+    })
+    wx.stopPullDownRefresh()
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-
+    this.setData({
+      film_history: [],
+      person_history: []
+    })
+		this.onLoad()
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  viewFilmDetail: function(e) {
+    let data = e.currentTarget.dataset
+    wx.redirectTo({
+			url: "../filmDetail/filmDetail?id=" + data.id
+		})
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  viewPersonDetail: function(e) {
+    let data = e.currentTarget.dataset
+    wx.redirectTo({
+			url: "../personDetail/personDetail?id=" + data.id
+		})
+  },
+  changeViewType: function(e) {
+    let data = e.currentTarget.dataset
+    this.setData({
+      show: data.type,
+      nullTip: data.type == "film_history" ? filmNullTip : personNullTip
+    })
   }
 })
