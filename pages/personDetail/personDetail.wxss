@@ -116,11 +116,12 @@
 
 .pd-work-item {
   width: 350rpx;
+  margin-bottom: 15rpx;
   overflow: hidden;
   text-align: center;
-  background-color: #f8f8f8;
   border: 1px solid #eee;
-  margin-bottom: 15rpx;
+  border-radius: 8rpx;
+  background-color: #f8f8f8;
 }
 
 .pd-work-cover {
@@ -134,10 +135,11 @@
 }
 
 .pd-work-title {
-  font-size: 36rpx;
+  font-size: 28rpx;
   color: #333;
 }
 
 .pd-work-roles {
+  font-size: 24rpx;
   color: #666;
 }
