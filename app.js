@@ -14,6 +14,7 @@ App({
     let that = this
     wx.login({
       success: function () {
+        //wx.getUserInfo接口已经被废弃，导致my.js页面获取不到用户信息，此问题还没解决
         wx.getUserInfo({
           success: function (res) {
             that.globalData.userInfo = res.userInfo
