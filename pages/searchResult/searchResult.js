@@ -1,66 +1,63 @@
 // pages/searchResult/searchResult.js
+let douban = require("../../common/script/fetch")
+let config = require("../../common/script/config")
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    films: [],
+		hasMore: true,
+		showLoading: true,
+		start: 0,
+		url: "",
+		keyword: "",
+		isNull: false,
+		nullTip: {
+			tipText: "sorry，没有找到您要的内容，换个关键词试试吧",
+			actionText: "返回",
+			routeUrl: "../search/search"
+		}
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-
+    let that = this
+    that.setData({
+      url: options.url,
+      keyword: options.keyword,
+      title: options.keyword
+    })
+    douban.search.call(that, that.data.url, that.data.keyword, that.data.start, config.count, function(data) {
+      if (data.subjects.length == 0) {
+				that.setData({
+					isNull: true
+				})
+			}
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onPullDownRefresh: function() {
+    let that = this
+		that.setData({
+			films: [],
+			hasMore: true,
+			showLoading: true,
+			start: 0
+		})
+		douban.search.call(that, that.data.url, that.data.keyword, that.data.start, config.count)
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onReachBottom: function() {
+    let that = this
+		if (!that.data.showLoading) {
+			douban.search.call(that, that.data.url, that.data.keyword, that.data.start, config.count)
+		}
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
+  viewFilmDetail: function(e) {
+		let data = e.currentTarget.dataset;
+		wx.redirectTo({
+			url: "../filmDetail/filmDetail?id=" + data.id
+		})
+	},
+	viewFilmByTag: function(e) {
+		let data = e.currentTarget.dataset
+		let keyword = data.tag
+		wx.redirectTo({
+			url: "../searchResult/searchResult?url=" + encodeURIComponent(config.apiList.search.byTag) + "&keyword=" + keyword
+		})
+	}
 })

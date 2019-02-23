@@ -1,66 +1,58 @@
 // pages/search/search.js
+let message = require("../../component/message/message")
+let douban = require("../../common/script/fetch")
+let config = require("../../common/script/config")
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    searchType: "keyword",
+    hotKeyword: config.hotKeyword,
+    hotTag: config.hotTag
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  changeSearchType: function() {
+    let types = ["默认", "类型"]
+    let searchType = ["keyword", "tag"]
+    let that = this
+    wx.showActionSheet({
+      itemList: types,
+      success: function(res) {
+        if(!res.cancel) {
+          that.setData({
+            searchType: searchType[res.tabIndex]
+          })
+        }
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  search: function(e) {
+    let that = this
+    let keyword = e.detail.value.keyword
+    if(keyword == "") {
+      message.show.call(that, {
+        content: "请输入内容",
+        icon: "null",
+        duration: 1500
+      })
+      return false
+    } else {
+      let searchUrl = that.data.searchType == "keyword" ? config.apiList.search.byKeyword : config.apiList.search.byTag
+      wx.redirectTo({
+        url: "../searchResult/searchResult?url=" + encodeURIComponent(searchUrl) + "&keyword=" + keyword 
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  searchByKeyword: function(e) {
+    let that = this
+    let keyword = e.currentTarget.dataset.keyword
+    wx.redirectTo({
+      url: "../searchResult/searchResult?url=" + encodeURIComponent(config.apiList.search.byKeyword) + "&keyword=" + keyword
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  searchByTag: function(e) {
+    let that = this
+    let keyword = e.currentTarget.dataset.keyword
+    wx.redirectTo({
+      url: "../searchResult/searchResult?url=" + encodeURIComponent(config.apiList.search.byTag) + "&keyword=" + keyword
+    }) 
   }
 })

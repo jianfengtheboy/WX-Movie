@@ -1,7 +1,7 @@
 <!--pages/popular/popular.wxml-->
 <block wx:if="{{!showLoading}}">
   <view class="search-bar">
-    <input class="search-txt" placeholder-class="search-txt-plc" bindfoucs="viewSearch" placeholder="请输入关键词搜索" type="text" />
+    <input class="search-txt" placeholder-class="search-txt-plc" bindfocus="viewSearch" placeholder="请输入关键词搜索" type="text"/>
   </view>
   <swiper class="banner" indicator-dots="true" autoplay="true" indicator-active-color="rgba(255,255,255,0.9)" indicator-color="rgba(255,255,255,0.6)">
     <block wx:for="{{bannerList}}" wx:for-item="bannerItem" wx:for-index="bannerIndex" wx:key="banner">

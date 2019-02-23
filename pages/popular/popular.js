@@ -71,7 +71,7 @@ Page({
   },
   viewSearch: function () {
     wx.navigateTo({
-      url: '../search/search'
+      url: "../search/search"
     })
   }
 })

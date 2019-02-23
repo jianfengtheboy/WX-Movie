@@ -24,7 +24,7 @@
 }
 
 .favorite-film-title {
-  font-size: 40rpx;
+  font-size: 36rpx;
   color: #333;
 }
 
@@ -71,6 +71,6 @@
 }
 
 .favorite-person-name {
-  font-size: 40rpx;
+  font-size: 36rpx;
   color: #666;
 }
